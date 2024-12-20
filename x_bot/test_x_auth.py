@@ -75,6 +75,8 @@ def test_authentication():
         print(f"{header}: {value}")
     
     # Specifically print the access level
+    # If this is only READ, you haven't set up your app correctly via the developer dashboard
+    # See the README.md for more details
     access_level = response.headers.get('x-access-level', 'Not found')
     print(f"\nAccess Level: {access_level}")
     
@@ -85,8 +87,7 @@ if __name__ == "__main__":
     test_authentication()
 
     # Post a tweet
-    tweet_text = "test tweet please ignore"
+    # This will work if the x-access-level is set to read-write
+    tweet_text = "Keep it simple"
     print(tweet_text)
     post_tweet(tweet_text)
-
-
