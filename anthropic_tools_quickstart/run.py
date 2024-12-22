@@ -44,7 +44,7 @@ def max_price_supervisor(max_price: float):
     return max_price_supervisor
 
 
-# No supervision, allways approved
+# No supervision, always approved
 @supervise()
 def get_weather(location: str, unit: str):
     """Get the weather in a city."""
