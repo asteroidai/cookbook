@@ -1,3 +1,4 @@
 # Asteroid Cookbook 
 
-Recipes for AI agents that use Asteroid to be safe and reliable. For more details on how to use Asteroid head to [Asteroid's doccumentation](https://docs.asteroid.ai/)
+- Recipes for AI agents that use Asteroid to be safe and reliable.
+- For more details on how to use Asteroid head to [Asteroid's doccumentation](https://docs.asteroid.ai/).
