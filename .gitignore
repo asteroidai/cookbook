@@ -1,2 +1,4 @@
 # Ignore any .env files
 *.env
+# Ignore internal examples folder
+internal_examples/
