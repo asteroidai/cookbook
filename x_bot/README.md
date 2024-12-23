@@ -53,7 +53,7 @@ OPENAI_API_KEY=your_openai_api_key
 
 # Asteroid
 ASTEROID_API_KEY=your_asteroid_api_key
-ASTEROID_API_URL=http://api.asteroid.ai
+ASTEROID_API_URL=your_asteroid_api_url
 ```
 
 ### 6. Run the bot:
