@@ -26,7 +26,7 @@ If the user asks for user-related actions such as modifying orders, processing r
 """
 
 # Define the LLM supervisor to check for policy compliance
-llm_policy_supervisor = llm_supervisor(instructions=supervisor_instructions)
+llm_policy_supervisor = llm_supervisor(instructions=supervisor_instructions, supervisor_name="llm_policy_supervisor")
 
 # Initialize the human supervisor
 human_supervisor_initialised = human_supervisor()
@@ -34,7 +34,7 @@ human_supervisor_initialised = human_supervisor()
 user_queries = [
     "Can you tell me more about your premium subscription plans?",
     "I need to modify my order from last week.",
-    "What are the features of your latest product?"
+    # "What are the features of your latest product?"
 ]
 
 for user_query in user_queries:
@@ -67,7 +67,7 @@ for user_query in user_queries:
 
     # Make the call to generate the assistant's response
     response = wrapped_client.chat.completions.create(
-        model="gpt-4",
+        model="gpt-4o",
         messages=messages,
         message_supervisors=[[llm_policy_supervisor, human_supervisor_initialised]],
     )

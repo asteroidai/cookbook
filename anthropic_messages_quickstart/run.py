@@ -25,12 +25,11 @@ Details about the products and services:
 """
 
 supervisor_instructions = """
-If the assistant's response complies with the customer support policy and is grounded in the details available in the context, approve.
-If the assistant wants to escalate to a human representative or does not follow the customer support policy, escalate.
+If the assistant wants to escalate to a human representative or does not follow the customer support policy, escalate! Otherwise, approve.
 """
 
 # Define the LLM supervisor to check for policy compliance
-llm_policy_supervisor = llm_supervisor(instructions=supervisor_instructions)
+llm_policy_supervisor = llm_supervisor(instructions=supervisor_instructions, supervisor_name="llm_policy_supervisor")
 
 # Initialize the human supervisor
 human_supervisor_initialized = human_supervisor()
