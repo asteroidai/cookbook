@@ -37,9 +37,9 @@ human_supervisor_initialized = human_supervisor()
 
 # Example user queries
 user_queries = [
-    # "Can you tell me more about your premium subscription plans?",
+    "Can you tell me more about your premium subscription plans?",
     "I need to modify my order from last week.",
-    # "What are the features of your latest product?",
+    "What are the features of your latest product?",
 ]
 
 for user_query in user_queries:
@@ -59,18 +59,15 @@ for user_query in user_queries:
     # Prepare the messages for the conversation
     messages = [
         {
-            "role": "assistant",
-            "content": customer_support_policy
-        },
-        {
             "role": "user",
             "content": user_query
-        },
+        }
     ]
 
     # Make the call to generate the assistant's response
     response = wrapped_client.messages.create(
         model="claude-3-opus-20240229",
+        system=customer_support_policy,
         max_tokens=1024,
         messages=messages,
         message_supervisors=[[llm_policy_supervisor, human_supervisor_initialized]],
