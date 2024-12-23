@@ -1,5 +1,5 @@
 import requests
-from requests_oauthlib import OAuth1
+from requests_oauthlib import OAuth1 
 import os
 from dotenv import load_dotenv
 import json
@@ -9,17 +9,17 @@ from openai import OpenAI
 # Import Asteroid SDK components
 from asteroid_sdk.supervision.decorators import supervise
 from asteroid_sdk.supervision.config import (
-    SupervisionDecision,
-    SupervisionDecisionType,
     ExecutionMode,
     RejectionPolicy,
     MultiSupervisorResolution,
 )
-from asteroid_sdk.supervision.supervisors import human_supervisor
+from asteroid_sdk.supervision.supervisors import human_supervisor, openai_llm_supervisor
 from asteroid_sdk.wrappers.openai import (
     asteroid_openai_client,
+)
+from asteroid_sdk.registration.initialise_project import (
     asteroid_init,
-    asteroid_end,
+    asteroid_end
 )
 
 # Load environment variables
@@ -61,11 +61,13 @@ def _post_tweet(message: str):
 
 # Wrap the tweet posting with human supervision
 @supervise(
-    supervision_functions=[[human_supervisor()]]
+    supervision_functions=[[human_supervisor(), openai_llm_supervisor("You are a human supervisor that reviews the tweet and decides if it is appropriate. If it is not, you reject it. If it is, you approve it.")]]
 )
 def post_tweet(message: str):
     """Post a tweet with human supervision"""
-    return _post_tweet(message)
+    print("posting tweet")
+    print(message)
+    #return _post_tweet(message)
 
 # Define the tool for the assistant
 tools = [
@@ -107,7 +109,7 @@ def run_twitter_bot(prompt: str):
     # Initialize Asteroid run
     run_id = asteroid_init(
         project_name="X Bot",
-        task_name="Tweet Agent",
+        task_name="Tweet Agent with very long name",
         execution_settings=EXECUTION_SETTINGS
     )
 

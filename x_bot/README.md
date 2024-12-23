@@ -75,9 +75,8 @@ python supervised_bot.py
 The bot follows this process:
 1. Takes your prompt (e.g., "Write a tweet about AI")
 2. Uses the OpenAI API to generate an appropriate tweet
-3. Passes the tweet through automatic checks (length, content)
-4. Waits for human approval
-5. Posts the approved tweet to X
+3. Waits for human approval
+4. Posts the approved tweet to X
 
 ## Troubleshooting
 
