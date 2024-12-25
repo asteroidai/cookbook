@@ -146,7 +146,6 @@ EXECUTION_SETTINGS = {
 run_id = asteroid_init(
     project_name="OpenAI Tools Quickstart",
     task_name="Booking Assistant",
-    run_name="booking-assistant",
     execution_settings=EXECUTION_SETTINGS
 )
 

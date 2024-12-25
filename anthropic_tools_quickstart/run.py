@@ -123,9 +123,8 @@ EXECUTION_SETTINGS = {
 
 for i in range(1):
     run_id = asteroid_init(
-        project_name="anthropic",
-        task_name="my-task",
-        run_name="my-run",
+        project_name="Anthropic Tools Quickstart",
+        task_name="Booking Assistant",
         execution_settings=EXECUTION_SETTINGS
     )
     # When you wrap the client, all supervised functions will be registered

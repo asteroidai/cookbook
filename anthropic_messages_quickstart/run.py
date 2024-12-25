@@ -25,7 +25,7 @@ Details about the products and services:
 """
 
 supervisor_instructions = """
-If the assistant wants to escalate to a human representative or does not follow the customer support policy, escalate! Otherwise, approve.
+If the assistant wants to escalate to a human representative escalate! Otherwise, approve.
 """
 
 # Define the LLM supervisor to check for policy compliance

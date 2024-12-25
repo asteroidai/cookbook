@@ -21,8 +21,7 @@ Details about the products and services:
 """
 
 supervisor_instructions = """
-If the user asks for generic product information, approve. 
-If the user asks for user-related actions such as modifying orders, processing refunds, or accessing personal account information and assistant is not able to handle it, escalate.
+If the assistant wants to escalate to a human representative escalate! Otherwise, approve.
 """
 
 # Define the LLM supervisor to check for policy compliance
@@ -34,7 +33,7 @@ human_supervisor_initialised = human_supervisor()
 user_queries = [
     "Can you tell me more about your premium subscription plans?",
     "I need to modify my order from last week.",
-    # "What are the features of your latest product?"
+    "What are the features of your latest product?"
 ]
 
 for user_query in user_queries:
