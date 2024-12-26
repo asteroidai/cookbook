@@ -1,7 +1,3 @@
-import os
-from typing import List, Optional, Union
-from uuid import UUID
-
 # Import necessary modules from the Asteroid SDK
 from asteroid_sdk.supervision.base_supervisors import human_supervisor, llm_supervisor
 from asteroid_sdk.registration.initialise_project import asteroid_init, asteroid_end
