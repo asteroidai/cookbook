@@ -57,7 +57,7 @@ def book_hotel(location: str, checkin: str, checkout: str, price: float):
     return f"Hotel booked in {location} from {checkin} to {checkout} for {price}."
 
 # Escalate to human if the flight is from the United States
-@supervise(supervision_functions=[[llm_supervisor(instructions="Escalate to human if the flight is from the United States."), human_supervisor()]])
+@supervise(supervision_functions=[[llm_supervisor(instructions="Escalate to human if the flight is from the United States.", provider="anthropic"), human_supervisor()]])
 def book_flight(departure_city: str, arrival_city: str, datetime: str, price: float):
     """Book a flight ticket."""
     return f"Flight booked from {departure_city} to {arrival_city} on {datetime} for {price}."

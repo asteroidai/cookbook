@@ -25,7 +25,7 @@ If the assistant wants to escalate to a human representative escalate! Otherwise
 """
 
 # Define the LLM supervisor to check for policy compliance
-llm_policy_supervisor = llm_supervisor(instructions=supervisor_instructions, supervisor_name="llm_policy_supervisor")
+llm_policy_supervisor = llm_supervisor(instructions=supervisor_instructions, supervisor_name="llm_policy_supervisor", provider="anthropic")
 
 # Initialize the human supervisor
 human_supervisor_initialized = human_supervisor()
