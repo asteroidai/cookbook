@@ -1,0 +1,4 @@
+approvers:
+  - name: asteroid_sdk/human_approver
+    tools: "*"
+    n: 1
