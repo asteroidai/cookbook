@@ -7,8 +7,7 @@ from asteroid_sdk.supervision.config import (
     SupervisionDecisionType,
     ExecutionMode,
     RejectionPolicy,
-    MultiSupervisorResolution,
-    SupervisionContext,
+    MultiSupervisorResolution
 )
 from asteroid_sdk.supervision.base_supervisors import human_supervisor, llm_supervisor
 from asteroid_sdk.wrappers.openai import asteroid_openai_client
@@ -180,7 +179,7 @@ for i in range(5):
     messages.append({
         "role": "assistant",
         "content": assistant_message.content or "",
-        "tool_calls": assistant_message.tool_calls or []
+        "tool_calls": assistant_message.tool_calls or None
     })
 
     if assistant_message.content:
