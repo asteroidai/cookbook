@@ -1,4 +1,4 @@
-asteroid-sdk>=0.1.4
+asteroid-sdk>=0.1.7
 openai>=1.0.0
 python-dotenv>=1.0.0
 requests>=2.31.0

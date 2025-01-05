@@ -15,7 +15,7 @@ This example demonstrates how to use the `inspect_ai` library in conjunction wit
 Before you begin, ensure you have the following dependencies installed:
 
 - **Python 3.11+**
-- `asteroid-sdk>=0.1.4`
+- `asteroid-sdk>=0.1.7`
 - `inspect-ai>=0.1.0`
 
 ### Installation
