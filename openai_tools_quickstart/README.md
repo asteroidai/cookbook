@@ -28,7 +28,6 @@ This quickstart guide demonstrates how to integrate OpenAI's models with custom 
 
    ```bash
    export ASTEROID_API_KEY="your-asteroid-api-key"
-   export ASTEROID_API_URL="your-asteroid-api-url"
    export OPENAI_API_KEY="your-openai-api-key"
    ```
 
