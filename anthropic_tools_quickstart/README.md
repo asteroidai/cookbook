@@ -28,7 +28,6 @@ This quickstart guide demonstrates how to integrate Anthropic's AI models with c
 
    ```bash
    export ASTEROID_API_KEY="your-asteroid-api-key"
-   export ASTEROID_API_URL="your-asteroid-api-url"
    export ANTHROPIC_API_KEY="your-anthropic-api-key"
    export OPENAI_API_KEY="your-openai-api-key"
    ```
