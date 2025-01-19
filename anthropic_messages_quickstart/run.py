@@ -61,7 +61,7 @@ for user_query in user_queries:
 
     # Make the call to generate the assistant's response
     response = wrapped_client.messages.create(
-        model="claude-3-opus-20240229",
+        model="claude-3-5-haiku-latest",
         system=customer_support_policy,
         max_tokens=1024,
         messages=messages,

@@ -2,7 +2,7 @@ from typing import Any, List, Union, Optional
 from uuid import UUID
 
 from anthropic import Anthropic
-from anthropic.types import ToolChoiceParam, ToolChoiceAutoParam, ToolParam, ToolUseBlock, TextBlock, Message
+from anthropic.types import ToolChoiceParam, ToolChoiceAutoParam, ToolParam, ToolUseBlock, TextBlock, Message, ToolResultBlockParam
 from openai.types.chat import ChatCompletionMessage
 from asteroid_sdk.wrappers.anthropic import asteroid_anthropic_client
 from asteroid_sdk.supervision.decorators import supervise, supervisor
@@ -142,7 +142,7 @@ for i in range(5):
     messages.append({"role": "user", "content": user_input})
 
     response = wrapped_client.messages.create(
-        model="claude-3-opus-20240229",
+        model="claude-3-5-haiku-latest",
         max_tokens=1024,
         messages=messages,
         tools=tools,
@@ -160,14 +160,14 @@ for i in range(5):
         elif isinstance(message, TextBlock):
             message_text = message.text
 
-    # Add assistant's response to conversation history
-    messages.append({"role": "assistant", "content": message_text})
-
     if message:
         print(f"Assistant: {message_text}")
+        
+    messages.append({"role": "assistant", "content": [message.to_dict()]})
 
     # If there are tool calls, execute them and add their results to the conversation
     if tool_calls:
+        
         for tool_call in tool_calls:
             function_name = tool_call.name
             function_args = tool_call.input
@@ -184,5 +184,6 @@ for i in range(5):
 
             print(f"Function result: {result}")
             # Add the function response to messages
+            messages.append({"role": "user", "content": [ToolResultBlockParam(type="tool_result", tool_use_id=tool_call.id, content=result)]})
 
 asteroid_end(run_id)
