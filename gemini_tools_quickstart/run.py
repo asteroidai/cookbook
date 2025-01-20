@@ -13,7 +13,7 @@ from asteroid_sdk.supervision.base_supervisors import human_supervisor, llm_supe
 from asteroid_sdk.registration.initialise_project import asteroid_init, asteroid_end
 
 import google.generativeai as genai
-
+import os
 
 
 def max_price_supervisor(max_price: float):
@@ -63,7 +63,7 @@ def book_hotel(location: str, checkin: str, checkout: str, price: float):
 
 # Escalate to human if the flight is from the United States
 # TODO - Update LLMSupervisor to use Provider Enum
-@supervise(supervision_functions=[[llm_supervisor(instructions="Escalate to human if the flight is from the United States.", provider="gemini"), human_supervisor()]])
+@supervise(supervision_functions=[[llm_supervisor(instructions="Escalate to human if the flight is from the United States. Don't focus on anything else!!", provider="openai"), human_supervisor()]])
 def book_flight(departure_city: str, arrival_city: str, datetime: str, price: float):
     """Book a flight ticket."""
     return f"Flight booked from {departure_city} to {arrival_city} on {datetime} for {price}."
@@ -85,7 +85,7 @@ run_id = asteroid_init(
     execution_settings=EXECUTION_SETTINGS
 )
 
-genai.configure(api_key="")
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 model = genai.GenerativeModel(
     "gemini-1.5-flash",
     tools=[get_weather, book_hotel, book_flight],
@@ -122,28 +122,25 @@ for i in range(5):
 
     response = wrapped_chat.send_message(user_input)
     # Make API call
-    assistant_message = response
 
-    message_text: str|None = None
-    tool_calls: List[ToolUseBlock]|None = None
-    for message in assistant_message:
-        if isinstance(message, ToolUseBlock):
-            # We only allow 1 tool call for now
-            tool_calls = [message]
-        elif isinstance(message, TextBlock):
-            message_text = message.text
+    function_calls = []
+    for part in response.candidates[0].content:
+        if part.function_call:
+            print(f"Tool Use: {part.function_call.name}")
+            print(f"Arguments: {part.function_call.args}")
+            function_calls.append(part.function_call)
+        else:
+            print(f"{response.role}: {part.text}")
 
-    # Add assistant's response to conversation history
-    messages.append({"role": "assistant", "content": message_text})
+        # Add assistant's response to conversation history
+        messages.extend(response.parts)
 
-    if message:
-        print(f"Assistant: {message_text}")
 
     # If there are tool calls, execute them and add their results to the conversation
-    if tool_calls:
-        for tool_call in tool_calls:
-            function_name = tool_call.name
-            function_args = tool_call.input
+    if function_calls:
+        for function_call in function_calls:
+            function_name = function_call.name
+            function_args = {arg: value for arg, value in function_call.args.items()}
 
             # Execute the function
             print(f"Executing function: {function_name} with args: {function_args}")
