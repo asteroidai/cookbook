@@ -2,7 +2,8 @@ from typing import Any, List, Union, Optional
 from uuid import UUID
 
 from anthropic import Anthropic
-from anthropic.types import ToolChoiceParam, ToolChoiceAutoParam, ToolParam, ToolUseBlock, TextBlock, Message, ToolResultBlockParam
+from anthropic.types import ToolChoiceParam, ToolChoiceAutoParam, ToolParam, ToolUseBlock, TextBlock, Message, \
+    ToolResultBlockParam, TextBlockParam
 from openai.types.chat import ChatCompletionMessage
 from asteroid_sdk.wrappers.anthropic import asteroid_anthropic_client
 from asteroid_sdk.supervision.decorators import supervise, supervisor
@@ -18,7 +19,7 @@ def max_price_supervisor(max_price: float):
         message: Union[ChatCompletionMessage, Message],
         **kwargs
     ) -> SupervisionDecision:
-        
+
         if not isinstance(message, Message):
             raise ValueError("Message is not an instance of Anthropic Message")
 
@@ -34,7 +35,7 @@ def max_price_supervisor(max_price: float):
                             decision=SupervisionDecisionType.REJECT,
                             explanation=f"Price {price} exceeds maximum allowed price of {max_price}."
                         )
-        
+
         # Default decision if no escalation is needed
         return SupervisionDecision(
             decision=SupervisionDecisionType.APPROVE,
@@ -162,12 +163,12 @@ for i in range(5):
 
     if message:
         print(f"Assistant: {message_text}")
-        
+
     messages.append({"role": "assistant", "content": [message.to_dict()]})
 
     # If there are tool calls, execute them and add their results to the conversation
     if tool_calls:
-        
+
         for tool_call in tool_calls:
             function_name = tool_call.name
             function_args = tool_call.input
@@ -183,7 +184,6 @@ for i in range(5):
                 result = book_hotel(**function_args)
 
             print(f"Function result: {result}")
-            # Add the function response to messages
-            messages.append({"role": "user", "content": [ToolResultBlockParam(type="tool_result", tool_use_id=tool_call.id, content=result)]})
+            messages.append({"role": "user", "content": [ToolResultBlockParam(type="tool_result", tool_use_id=tool_call.id, content=[TextBlockParam(text=result, type="text")])]})
 
 asteroid_end(run_id)
