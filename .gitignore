@@ -2,3 +2,7 @@
 *.env
 # Ignore internal examples folder
 internal_examples/
+
+**/.idea/
+
+**/node_modules/
